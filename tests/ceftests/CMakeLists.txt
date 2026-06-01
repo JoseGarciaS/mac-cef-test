@@ -501,6 +501,8 @@ if(OS_MAC)
     add_custom_command(
       TARGET ${CEF_TARGET}
       POST_BUILD
+          COMMAND ${CMAKE_COMMAND} -E make_directory
+            "${CEF_APP}/Contents/Frameworks/${_helper_output_name}.app"
       COMMAND ${CMAKE_COMMAND} -E copy_directory
               "${CEF_TARGET_OUT_DIR}/${_helper_output_name}.app"
               "${CEF_APP}/Contents/Frameworks/${_helper_output_name}.app"

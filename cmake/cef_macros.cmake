@@ -220,6 +220,7 @@ macro(COPY_MAC_FRAMEWORK target binary_path app_path)
   add_custom_command(
     TARGET ${target}
     POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E make_directory "${FRAMEWORK_DIR}/Versions/A"
     COMMAND ${CMAKE_COMMAND} -E copy_directory
             "${binary_path}/Chromium Embedded Framework.framework"
             "${FRAMEWORK_DIR}/Versions/A"
