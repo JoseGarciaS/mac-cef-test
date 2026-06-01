@@ -1,0 +1,41 @@
+name: macos-cefsimple
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  build-cefsimple:
+    runs-on: macos-15-intel
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Configure CMake
+        run: |
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES=x86_64
+
+      - name: Build cefsimple
+        run: |
+          cmake --build build --target cefsimple
+
+      - name: Collect app bundle
+        run: |
+          mkdir -p artifacts
+          cp -R build/tests/cefsimple/Release/cefsimple.app artifacts/
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: cefsimple-macos-app
+          path: artifacts/cefsimple.app
