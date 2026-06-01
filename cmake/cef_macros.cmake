@@ -221,9 +221,15 @@ macro(COPY_MAC_FRAMEWORK target binary_path app_path)
     TARGET ${target}
     POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E make_directory "${FRAMEWORK_DIR}/Versions/A"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+      "${binary_path}/Chromium Embedded Framework.framework/Chromium Embedded Framework"
+      "${FRAMEWORK_DIR}/Versions/A/Chromium Embedded Framework"
     COMMAND ${CMAKE_COMMAND} -E copy_directory
-            "${binary_path}/Chromium Embedded Framework.framework"
-            "${FRAMEWORK_DIR}/Versions/A"
+      "${binary_path}/Chromium Embedded Framework.framework/Libraries"
+      "${FRAMEWORK_DIR}/Versions/A/Libraries"
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+      "${binary_path}/Chromium Embedded Framework.framework/Resources"
+      "${FRAMEWORK_DIR}/Versions/A/Resources"
     COMMAND cd "${FRAMEWORK_DIR}" && ln -sf
             "Versions/A/Chromium Embedded Framework"
             "Chromium Embedded Framework"

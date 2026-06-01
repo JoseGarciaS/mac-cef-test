@@ -23,7 +23,11 @@ jobs:
 
       - name: Configure CMake
         run: |
-          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES=x86_64
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DPROJECT_ARCH=x86_64
+
+      - name: Build libcef_dll_wrapper
+        run: |
+          cmake --build build --target libcef_dll_wrapper
 
       - name: Build cefsimple
         run: |
